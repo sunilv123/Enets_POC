@@ -40,13 +40,14 @@ public class PaymentController {
 
 		try {
 
-			String generatedHmac = enetPaymentService.generateSignature();
+			 String generatedHmac = enetPaymentService.generateSignature(txnRes, secret_Key);//generate mac
+			//String generatedHmac = enetPaymentService.generateSignature();
 			String macFromGW = request.getHeader("hmac");
 			log.info("MERCHANT APP : header hmac  received :" + macFromGW);//
 			log.info("MERCHANT APP : header hmac  generated :" + generatedHmac);
 			if (generatedHmac.equalsIgnoreCase(macFromGW)) {
 
-				log.info("MERCHANT APP : in receiveS2STxnEnd :" + txnRes);
+				log.info("MERCHANT APP : Payment transaction completed :" + txnRes);
 				// Please handle success or failure response code
 			} else {
 				log.error("signature not matched.");

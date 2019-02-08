@@ -78,11 +78,11 @@ public class EnetPaymentService {
 			
 			PaymentMessage msg = new PaymentMessage();
 			msg.setTxnAmount("998");
-			msg.setMerchantTxnRef("20190205 11:59:03.92");
-			msg.setB2sTxnEndURL("http://c08a129d.ngrok.io/b2sTxnEnd");
-			msg.setS2sTxnEndURL("https://c08a129d.ngrok.io/s2sTxnEnd");
+			msg.setMerchantTxnRef("20190208 11:555:03.92");
+			msg.setB2sTxnEndURL("https://e4012b85.ngrok.io/b2sTxnEnd");
+			msg.setS2sTxnEndURL("https://e4012b85.ngrok.io/s2sTxnEnd");
 			msg.setNetsMid(UMID);
-			msg.setMerchantTxnDtm("20190205 12:51:07.92");
+			msg.setMerchantTxnDtm("20190208 11:55:07.92");
 			msg.setSubmissionMode("B");
 			msg.setPaymentType("SALE");
 			msg.setPaymentMode("CC");
@@ -96,30 +96,4 @@ public class EnetPaymentService {
 		    return dto;
 		}
 		
-		//JAVA SAMPLE
-		@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "/s2sTxnEnd", method = RequestMethod.POST)
-		  public ResponseEntity<Void> receiveS2STxnEnd(@RequestBody String txnRes, HttpServletRequest request) {
-		    log.debug("MERCHANT APP : in receiveS2STxnEnd :" + txnRes);//json message received as string
-		    try {
-		    	 String secretKey = "4d1a370a-6996-49f5-b4b2-2efdda5d8a4a";
-		      String generatedHmac = generateSignature(txnRes, secretKey);//generate mac
-		      String macFromGW = request.getHeader("hmac");
-		      log.info ("MERCHANT APP : header hmac  received :" + macFromGW);// 
-		      log.info("MERCHANT APP : header hmac  generated :" + generatedHmac);
-		      if(generatedHmac.equalsIgnoreCase(macFromGW)){
-		  
-		      log.info("MERCHANT APP : in receiveS2STxnEnd :" + txnRes);
-		                         //Please handle success or failure response code
-
-		      }
-		      else{
-		        log.error("signature not matched.");
-		        //handle exception flow
-		      }
-		    } catch (Exception e) {
-		      // TODO handle exception
-		      log.error(e.getMessage());
-		    }
-		    return new ResponseEntity<Void>(HttpStatus.OK);
-		  }
 }
